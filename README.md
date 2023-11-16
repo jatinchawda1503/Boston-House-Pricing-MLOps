@@ -1,6 +1,11 @@
 # Boston-House-Pricing-MLOps
  
-# Eviorment Creation
+# Enviorment Creation
 ```
 conda create -n boston-pricing-mlops python=3.11
+conda activate boston-pricing-mlops
+```
+
+```
+pip install -r requirments.txt
 ```
