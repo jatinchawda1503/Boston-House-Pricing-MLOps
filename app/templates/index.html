@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boston House Price Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    <div class="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Boston House Price Prediction</h1>
+                </div>
+                <div class="col-12">
+                    <div class="form-main">
+                        <div class="form-inner">
+                            <div class="row">
+                                <div class="col-4">
+                                    <label for="crim" class="form-label">CRIME</label>
+                                    <input type="text" class="form-control" id="crim" placeholder="CRIM  per capita crime rate by town">
+                                </div>
+                                <div class="col-4">
+                                    <label for="zn" class="form-label">ZN</label>
+                                    <input type="text" class="form-control" id="zn" placeholder="ZN proportion of residential land zoned for lots over 25,000 sq.ft.">
+                                </div>
+                                <div class="col-4">
+                                    <label for="indus" class="form-label">INDUS</label>
+                                    <input type="text" class="form-control" id="indus" placeholder="INDUS proportion of non-retail business acres per town">
+                                </div>
+                                <div class="col-4">
+                                    <label for="nox" class="form-label">NOX</label>
+                                    <input type="text" class="form-control" id="nox" placeholder="NOX nitric oxides concentration">
+                                </div>
+                                <div class="col-4">
+                                    <label for="rm" class="form-label">RM</label>
+                                    <input type="text" class="form-control" id="rm" placeholder="RM average number of rooms per dwelling">
+                                </div>
+                                <div class="col-4">
+                                    <label for="age" class="form-label">AGE</label>
+                                    <input type="text" class="form-control" id="age" placeholder="AGE proportion of owner-occupied units built prior to 1940">
+                                </div>
+                                <div class="col-4">
+                                    <label for="dis" class="form-label">DIS</label>
+                                    <input type="text" class="form-control" id="dis" placeholder="DIS weighted distances to five Boston employment centres">
+                                </div>
+                                <div class="col-4">
+                                    <label for="rad" class="form-label">RAD</label>
+                                    <input type="text" class="form-control" id="rad" placeholder="RAD index of accessibility to radial highways">
+                                </div>
+                                <div class="col-4">
+                                    <label for="tax" class="form-label">TAX</label>
+                                    <input type="text" class="form-control" id="tax" placeholder="TAX full-value property-tax rate per $10,000">
+                                </div>
+                                <div class="col-4">
+                                    <label for="ptratio" class="form-label">PTRATIO</label>
+                                    <input type="text" class="form-control" id="ptratio" placeholder="PTRATIO pupil-teacher ratio by town">
+                                </div>
+                                <div class="col-4">
+                                    <label for="b" class="form-label">B</label>
+                                    <input type="text" class="form-control" id="b" placeholder="B">
+                                </div>
+                                <div class="col-4">
+                                    <label for="lstat" class="form-label">LSTAT</label>
+                                    <input type="text" class="form-control" id="lstat" placeholder="LSTAT % lower status of the population">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit-button">
+                            <button type="submit" class="btn btn-primary" id="submit" onclick=predict()>Submit</button>
+                        </div>
+                    </div>
+                    <div class="result-area" id="result">
+
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            function get_inputs(){
+                var crim = document.getElementById("crim").value;
+                var zn = document.getElementById("zn").value;
+                var indus = document.getElementById("indus").value;
+                var nox = document.getElementById("nox").value;
+                var rm = document.getElementById("rm").value;
+                var age = document.getElementById("age").value;
+                var dis = document.getElementById("dis").value;
+                var rad = document.getElementById("rad").value;
+                var tax = document.getElementById("tax").value;
+                var ptratio = document.getElementById("ptratio").value;
+                var b = document.getElementById("b").value;
+                var lstat = document.getElementById("lstat").value;
+
+                // check if  inputs are empty or not and values should be in numbers
+                if (crim == "" || zn == "" || indus == "" || nox == "" || rm == "" || age == "" || dis == "" || rad == "" || tax == "" || ptratio == "" || b == "" || lstat == ""){
+                    alert("Please fill all the fields");
+                    return;
+                }
+                if (isNaN(crim) || isNaN(zn) || isNaN(indus) || isNaN(nox) || isNaN(rm) || isNaN(age) || isNaN(dis) || isNaN(rad) || isNaN(tax) || isNaN(ptratio) || isNaN(b) || isNaN(lstat)){
+                    alert("Please enter numbers only");
+                    return;
+                }
+                var inputs = {
+                    "CRIM": crim,
+                    "ZN": zn,
+                    "INDUS": indus,
+                    "NOX": nox,
+                    "RM": rm,
+                    "AGE": age,
+                    "DIS": dis,
+                    "RAD": rad,
+                    "TAX": tax,
+                    "PTRATIO": ptratio,
+                    "B": b,
+                    "LSTAT": lstat
+                }
+                return inputs;
+            }
+
+            function predict(){
+                result_area = document.getElementById("result");
+                result_area.style.display = "none";
+                result_area.innerHTML = "";
+                $.ajax({
+                    url: "{{ url_for('predict') }}",
+                    type: 'POST',
+                    data: JSON.stringify(get_inputs()),
+                    contentType: 'application/json',
+                }).done(function(data){
+                    console.log(data);
+                    result_area.style.display = "block";
+                    result_area.innerHTML = "<h3>Predicted Price: " + data["predictions"] + "</h3>";
+                });
+            }
+
+        </script>
+    </footer>
+</body>
+</html>
