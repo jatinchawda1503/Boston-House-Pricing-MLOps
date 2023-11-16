@@ -1,11 +1,19 @@
 # Boston-House-Pricing-MLOps
  
-# Enviorment Creation
+## Environment Creation
 ```
 conda create -n boston-pricing-mlops python=3.11
 conda activate boston-pricing-mlops
 ```
 
+## Install the dependency 
+
 ```
 pip install -r requirments.txt
+```
+
+## Run Flask App 
+
+```
+
 ```
