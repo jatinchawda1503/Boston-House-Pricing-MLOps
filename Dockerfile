@@ -1,4 +1,4 @@
-FROM python:3.11.6-alpine3.18
+FROM python:3.11
 COPY . /boston-app 
 WORKDIR /boston-app
 RUN pip install -r requirements.txt
